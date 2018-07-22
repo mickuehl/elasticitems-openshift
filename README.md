@@ -41,6 +41,10 @@ project `base-images` and `elasticitems`.
 
     oc create -f templates/elasticitems-mongodb.yaml
     
+### Deploy the Data-Loader Container
+
+    oc create -f templates/elasticitems-mongodb-loader.yaml
+    
 ### Build the App
 
     oc create -f templates/elasticitems-build.yaml
@@ -56,3 +60,4 @@ project `base-images` and `elasticitems`.
 * https://docs.openshift.org/latest/using_images/db_images/mongodb.html
 * https://github.com/linkbynet/openshift-stateful-elasticsearch-cluster 
 * https://docs.openshift.org/latest/dev_guide/builds/build_inputs.html#source-secrets-basic-authentication 
+* https://portworx.com/ha-mongodb-kubernetes/
