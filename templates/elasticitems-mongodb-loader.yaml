@@ -1,0 +1,61 @@
+apiVersion: v1
+items:
+- kind: ImageStream
+  apiVersion: "v1"
+  metadata:
+    annotations:
+      description: The elasticitems java app
+    name: 'mongodb-loader'
+
+- kind: BuildConfig
+  apiVersion: "v1"
+  metadata:
+    annotations:
+      description: The elasticitems java app
+      template.alpha.openshift.io/wait-for-ready: 'true'
+    name: 'mongodb-loader'
+  spec:
+    
+    source:
+      type: Git
+      git:
+        uri: 'https://github.com/mickuehl/elasticitems.git'
+        ref: 'develop-v2'
+      sourceSecret:
+        name: 'gitsecret'
+      contextDir: ''
+    
+    strategy:
+      sourceStrategy:
+        from:
+          kind: 'ImageStreamTag'
+          name: 'mongodb-loader:latest'
+          namespace: 'base-images'
+
+        env:
+          # Location of the data file
+          - name: DATA_FILE_CONTEXT
+            value: ''
+          # Name of the data file
+          - name: DATA_FILE
+            value: ''
+          # Command to uncompress the data file
+          - name: UNCOMPRESS_CMD
+            value: 'tar zxvf'
+          
+    output:
+      to:
+        kind: ImageStreamTag
+        name: 'mongodb-loader:latest'
+
+    postCommit:
+      script: ''
+    
+    triggers:
+      - type: 'GitHub'
+        github:
+          secretReference:
+            name: 'elasticitems'
+
+kind: List
+metadata: []

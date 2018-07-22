@@ -1,8 +1,10 @@
 #!/bin/bash
 
-# test
+APP_ROOT=/opt/app-root
 
-mongoimport
+$UNCOMPRESS_CMD $DATA_FILE_CONTEXT/$DATA_FILE -C $APP_ROOT
+
+ls -la $APP_ROOT
 
 # Success
 exit 0
