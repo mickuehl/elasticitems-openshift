@@ -43,7 +43,6 @@ RUN yum install -y epel-release
 
 # Install the MongoDB repo
 COPY mongodb-org.repo /etc/yum.repos.d/mongodb-org.repo
-RUN yum repolist
 
 # Clean the cache (see https://access.redhat.com/articles/1320623)
 RUN rm -fr /var/cache/yum/* && yum clean all 
