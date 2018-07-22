@@ -1,0 +1,52 @@
+apiVersion: v1
+items:
+- kind: ImageStream
+  apiVersion: "v1"
+  metadata:
+    annotations:
+      description: The basic java image
+      tags: java,microservices,fatjar
+      supports: java:8
+    name: 'base-java'
+
+- kind: BuildConfig
+  apiVersion: "v1"
+  metadata:
+    annotations:
+      description: The basic java image
+      template.alpha.openshift.io/wait-for-ready: 'true'
+    name: 'base-java'
+  spec:
+    
+    source:
+      type: Git
+      git:
+        uri: 'https://github.com/mickuehl/elasticitems-openshift.git'
+        ref: 'master'
+      sourceSecret:
+        name: "gitsecret"
+      contextDir: 'images/java'
+    
+    strategy:
+      dockerStrategy:
+        dockerfilePath: Dockerfile
+        # define all parameters that are needed during the build !
+        env:
+          # database configuration
+          - name: FOO
+            value: 'bar'
+
+    output:
+      to:
+        kind: ImageStreamTag
+        name: 'base-java:latest'
+
+    postCommit:
+      script: ''
+    
+    triggers:
+      - type: ImageChange
+      - type: ConfigChange
+
+kind: List
+metadata: []

@@ -1,0 +1,52 @@
+apiVersion: v1
+items:
+- kind: ImageStream
+  apiVersion: "v1"
+  metadata:
+    annotations:
+      description: Base image for running java builds
+      tags: java,microservices,fatjar
+      supports: java:8,maven:3
+    name: 'java-mvn'
+
+- kind: BuildConfig
+  apiVersion: "v1"
+  metadata:
+    annotations:
+      description: Base image for running java builds
+      template.alpha.openshift.io/wait-for-ready: 'true'
+    name: 'java-mvn'
+  spec:
+    
+    source:
+      type: Git
+      git:
+        uri: 'https://github.com/mickuehl/elasticitems-openshift.git'
+        ref: 'master'
+      sourceSecret:
+        name: "gitsecret"
+      contextDir: 'images/java-mvn'
+    
+    strategy:
+      dockerStrategy:
+        dockerfilePath: Dockerfile
+        # define all parameters that are needed during the build !
+        env:
+          # database configuration
+          - name: FOO
+            value: 'bar'
+
+    output:
+      to:
+        kind: ImageStreamTag
+        name: 'java-mvn:latest'
+
+    postCommit:
+      script: ''
+    
+    triggers:
+      - type: ImageChange
+      - type: ConfigChange
+
+kind: List
+metadata: []

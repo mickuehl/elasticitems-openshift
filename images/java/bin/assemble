@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# expects the binary in /tmp/src
+cp /tmp/src/ROOT.war /opt/app-root/ROOT.war
+
+# Success
+exit 0

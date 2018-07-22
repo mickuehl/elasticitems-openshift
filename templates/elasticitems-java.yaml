@@ -1,0 +1,74 @@
+apiVersion: v1
+items:
+- kind: ImageStream
+  apiVersion: "v1"
+  metadata:
+    annotations:
+      description: The elasticitems java app
+    name: 'elasticitems-java'
+
+- kind: BuildConfig
+  apiVersion: "v1"
+  metadata:
+    annotations:
+      description: The elasticitems java app
+      template.alpha.openshift.io/wait-for-ready: 'true'
+    name: 'elasticitems-java'
+  spec:
+    
+    source:
+      type: Git
+      git:
+        uri: 'https://github.com/mickuehl/elasticitems.git'
+        ref: 'develop-v2'
+      sourceSecret:
+        name: 'gitsecret'
+      contextDir: ''
+    
+    strategy:
+      sourceStrategy:
+        from:
+          kind: 'ImageStreamTag'
+          name: 'java-mvn:latest'
+          namespace: 'base-images'
+
+        env:
+          # Maven build configuration
+          - name: MAVEN_GOALS
+            value: 'clean install package'
+          - name: MAVEN_ARGS
+            value: '-DskipTests -B'
+          - name: MAVEN_OPTS
+            value: '-Xmx1024m -Xms1024m'
+          - name: MAVEN_PROFILE
+            value: ''
+          - name: MAVEN_MIRROR_URL
+            value: ''
+          - name: ARTIFACT_DIR
+            value: 'frontend/target'
+          - name: ARTIFACT_NAME
+            value: 'frontend-2.0-SNAPSHOT'
+          # Nexus config
+          - name: NEXUS_USER
+            value: 'admin'
+          - name: NEXUS_PASSWORD
+            value: 'admin123'
+
+    output:
+      to:
+        kind: ImageStreamTag
+        name: 'elasticitems-java:latest'
+
+    postCommit:
+      script: ''
+    
+    triggers:
+      - type: ImageChange
+      - type: ConfigChange
+      - type: 'GitHub'
+        github:
+          secretReference:
+            name: 'elasticitems'
+
+kind: List
+metadata: []
