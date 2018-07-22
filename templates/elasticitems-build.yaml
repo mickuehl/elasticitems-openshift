@@ -33,7 +33,7 @@ items:
           namespace: 'base-images'
 
         env:
-          # Maven build configuration
+          # Maven configuration
           - name: MAVEN_GOALS
             value: 'clean install package'
           - name: MAVEN_ARGS

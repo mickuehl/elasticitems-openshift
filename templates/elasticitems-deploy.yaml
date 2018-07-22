@@ -1,0 +1,116 @@
+apiVersion: v1
+items:
+- kind: DeploymentConfig
+  apiVersion: 'v1'
+  metadata:
+    annotations:
+      description: Defines how to deploy the application
+      template.alpha.openshift.io/wait-for-ready: 'true'
+    name: 'elasticitems-java'
+  spec:
+    replicas: 1
+    selector:
+      name: 'elasticitems-java'
+    
+    #strategy:
+    #  type: Recreate
+    #  recreateParams:
+    #    pre:
+    #      execNewPod:
+    #        command:
+    #          - 'echo foo'
+    #        containerName: 'elasticitems-java'
+    #      failurePolicy: Abort
+      
+    template:
+      metadata:
+        labels:
+          name: 'elasticitems-java'
+        name: 'elasticitems-java'
+      spec:
+        containers:
+          - env:
+            - name: ENVIRONMENT
+              value: 'dev'
+
+            # MongoDB configuration  
+            - name: MONGODB_HOST
+              value: 'mongodb.elasticitems.svc'
+
+            - name: MONGODB_USER
+              valueFrom:
+                secretKeyRef:
+                  key: mongodb-user
+                  name: elasticitems
+            
+            - name: MONGODB_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: mongodb-admin-password
+                  name: elasticitems
+            
+            # Elasticsearch configuration
+            - name: ELASTICSEARCH_HOST
+              value: 'elasticsearch.elasticitems.svc'
+
+            - name: ELASTICSEARCH_PORT
+              value: '9200'
+
+            # Spring Boot Overrides
+            - name: mongoHost
+              value: 'mongodb://admin:secret@mongodb.elasticitems.svc'
+
+            - name: elasticSearchHost
+              value: 'elasticsearch.elasticitems.svc:9200'
+
+            name: 'elasticitems-java'
+            
+            ports:
+              - containerPort: 8080
+
+            resources:
+              limits:
+                memory: '1024Mi'
+
+            #livenessProbe:
+            #  httpGet:
+            #    path: /status/live
+            #    port: 8080
+            #  initialDelaySeconds: 60
+            #  timeoutSeconds: 3
+            
+            #readinessProbe:
+            #  httpGet:
+            #    path: /status/ready
+            #    port: 8080
+            #  initialDelaySeconds: 30
+            #  timeoutSeconds: 5
+            
+    triggers:
+      - imageChangeParams:
+          automatic: true
+          containerNames:
+            - 'elasticitems-java'
+          from:
+            kind: ImageStreamTag
+            name: 'elasticitems-java:latest'
+        type: ImageChange
+      - type: ConfigChange
+
+- kind: Service
+  apiVersion: 'v1'
+  metadata:
+    annotations:
+      description: Exposes and load balances the application pods
+      service.alpha.openshift.io/dependencies: '[{"name": "mongodb", "kind": "Service"},{"name": "elasticsearch", "kind": "Service"}]'
+    name: 'elasticitems-java'
+  spec:
+    ports:
+      - name: web
+        port: 8080
+        targetPort: 8080
+    selector:
+      name: 'elasticitems-java'
+
+kind: List
+metadata: []
