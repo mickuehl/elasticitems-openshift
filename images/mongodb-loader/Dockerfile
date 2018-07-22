@@ -7,7 +7,7 @@ ENV RELEASE 1
 
 # Packages to install
 ENV INSTALL_PKGS "curl tar unzip bc which lsof make nss_wrapper bind-utils"
-ENV MONGODB_PACKAGES "mongodb-org"
+ENV MONGODB_PACKAGES "mongodb-org-tools"
 
 # Image metadata
 ENV NAME="mongodb-loader"
@@ -49,7 +49,7 @@ RUN yum repolist
 RUN rm -fr /var/cache/yum/* && yum clean all 
 
 # Install OS packages
-RUN yum install -y --enablerepo=centosplus $INSTALL_PKGS $DEVEL_PACKAGES && \
+RUN yum install -y --enablerepo=centosplus $INSTALL_PKGS $MONGODB_PACKAGES && \
     rpm -V $INSTALL_PKGS $MONGODB_PACKAGES && \
     yum clean all && \
     rm -rf /var/cache/yum
