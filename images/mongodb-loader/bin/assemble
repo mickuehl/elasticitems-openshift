@@ -3,9 +3,10 @@
 LOCAL_SOURCE_DIR=/tmp/src
 APP_ROOT=/opt/app-root
 
+# change to the location of the git repo
 cd $LOCAL_SOURCE_DIR
-ls -la
 
+# unpack the load file(s)
 $UNCOMPRESS_CMD $DATA_FILE_CONTEXT/$DATA_FILE -C $APP_ROOT
 
 ls -la $APP_ROOT
