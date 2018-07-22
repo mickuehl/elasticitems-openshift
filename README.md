@@ -56,5 +56,3 @@ project `base-images` and `elasticitems`.
 * https://docs.openshift.org/latest/using_images/db_images/mongodb.html
 * https://github.com/linkbynet/openshift-stateful-elasticsearch-cluster 
 * https://docs.openshift.org/latest/dev_guide/builds/build_inputs.html#source-secrets-basic-authentication 
-
-curl -u mickuehl -0 https://github.com/mickuehl/elasticitems/raw/develop-v2/test-data.tar.gz | tar -zx -C /tmp
