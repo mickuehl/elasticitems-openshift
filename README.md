@@ -41,10 +41,10 @@ project `base-images` and `elasticitems`.
 
     oc create -f templates/elasticitems-mongodb.yaml
     
-### Deploy the Data-Loader Container
+### Create the Dataloader Container
 
     oc create -f templates/elasticitems-mongodb-loader.yaml
-    
+
 ### Build the App
 
     oc create -f templates/elasticitems-build.yaml
