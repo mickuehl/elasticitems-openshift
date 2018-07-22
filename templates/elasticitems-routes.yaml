@@ -1,0 +1,15 @@
+apiVersion: v1
+items:
+
+- kind: Route
+  apiVersion: 'v1'
+  metadata:
+    name: 'elasticitems-java'
+  spec:
+    host: 'www.elasticitems.de'
+    to:
+      kind: Service
+      name: 'elasticitems-java'
+
+kind: List
+metadata: []
