@@ -49,7 +49,7 @@ RUN rm -fr /var/cache/yum/* && yum clean all
 
 # Install OS packages
 RUN yum install -y --enablerepo=centosplus $INSTALL_PKGS $DEVEL_PACKAGES && \
-    rpm -V $INSTALL_PKGS $DEVEL_PACKAGES && \
+    rpm -V $INSTALL_PKGS $MONGODB_PACKAGES && \
     yum clean all && \
     rm -rf /var/cache/yum
 
