@@ -7,7 +7,7 @@ ENV RELEASE 1
 
 # Packages to install
 ENV INSTALL_PKGS "curl tar unzip bc which lsof make nss_wrapper bind-utils"
-ENV MONGODB_PACKAGES "mongodb-org-tools"
+ENV MONGODB_PACKAGES "mongodb-org"
 
 # Image metadata
 ENV NAME="mongodb-loader"
