@@ -13,7 +13,7 @@
     export PROJECT_NAME='elasticitems'
     export DISPLAY_NAME='elasticitems'
     
-    # The CI/CD project
+    # The elasticitems project
     oc new-project $PROJECT_NAME --display-name="$DISPLAY_NAME" --description="elastic items basic deployment"
     oc project $PROJECT_NAME
 
@@ -54,11 +54,4 @@ project `base-images` and `elasticitems`.
 
 https://github.com/sclorg/mongodb-container
 https://github.com/linkbynet/openshift-stateful-elasticsearch-cluster
-
 https://docs.openshift.org/latest/dev_guide/builds/build_inputs.html#source-secrets-basic-authentication
-
-
-
-oc new-app https://github.com/mickuehl/elasticitems.git#develop-v2 --source-secret=gitsecret --allow-missing-imagestream-tags=true
-
-oc policy add-role-to-group system:image-puller system:serviceaccounts:base-images -n elasticitems

@@ -4,7 +4,7 @@ PROJECT_NAME='elasticitems'
 DISPLAY_NAME='elasticitems'
 DOMAIN_NAME='svc.alpha.majordomus.io'
 
-# The CI/CD project
+# The elasticitems project
 oc new-project $PROJECT_NAME --display-name="$DISPLAY_NAME" --description="elastic items basic deployment"
 oc project $PROJECT_NAME
 
