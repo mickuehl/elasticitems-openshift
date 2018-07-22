@@ -52,6 +52,7 @@ project `base-images` and `elasticitems`.
 
 ## Reference
 
-https://github.com/sclorg/mongodb-container
-https://github.com/linkbynet/openshift-stateful-elasticsearch-cluster
-https://docs.openshift.org/latest/dev_guide/builds/build_inputs.html#source-secrets-basic-authentication
+* https://github.com/sclorg/mongodb-container 
+* https://github.com/linkbynet/openshift-stateful-elasticsearch-cluster 
+* https://docs.openshift.org/latest/dev_guide/builds/build_inputs.html#source-secrets-basic-authentication 
+
