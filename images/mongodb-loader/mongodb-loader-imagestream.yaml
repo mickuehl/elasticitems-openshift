@@ -1,0 +1,52 @@
+apiVersion: v1
+items:
+- kind: ImageStream
+  apiVersion: "v1"
+  metadata:
+    annotations:
+      description: Base image for loading data into MongoDB
+      tags: mongodb
+      supports: mongodb:3.2
+    name: 'mongodb-loader'
+
+- kind: BuildConfig
+  apiVersion: "v1"
+  metadata:
+    annotations:
+      description: Base image for loading data into MongoDB
+      template.alpha.openshift.io/wait-for-ready: 'true'
+    name: 'mongodb-loader'
+  spec:
+    
+    source:
+      type: Git
+      git:
+        uri: 'https://github.com/mickuehl/elasticitems-openshift.git'
+        ref: 'master'
+      sourceSecret:
+        name: "gitsecret"
+      contextDir: 'images/mongodb-loader'
+    
+    strategy:
+      dockerStrategy:
+        dockerfilePath: Dockerfile
+        # define all parameters that are needed during the build !
+        env:
+          # database configuration
+          - name: FOO
+            value: 'bar'
+
+    output:
+      to:
+        kind: ImageStreamTag
+        name: 'mongodb-loader:latest'
+
+    postCommit:
+      script: ''
+    
+    triggers:
+      - type: ImageChange
+      - type: ConfigChange
+
+kind: List
+metadata: []
