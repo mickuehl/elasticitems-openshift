@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# expects the binary in /tmp/src
-cp /tmp/src/ROOT.war /opt/app-root/ROOT.war
+# test
+
+mongoimport
 
 # Success
 exit 0
