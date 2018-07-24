@@ -4,10 +4,6 @@
 
     ./scripts/create_imagestream.sh
 
-## Create the CI/CD tools
-
-    ./scripts/create_cicd.sh
-
 ## Create a new project
 
     export PROJECT_NAME='elasticitems'
@@ -18,7 +14,7 @@
     oc project $PROJECT_NAME
 
 
-### Create a Basic Authentication Secret
+### Create Basic Authentication Secret
 
     oc create secret generic <secret_name> \
         --from-literal=username=<user_name> \
@@ -27,7 +23,7 @@
         -n <project>
 
 where `secret_name` is `gitsecret` and `user_name` and `password` are your GitHub credentials. Add the git credentials to
-project `base-images` and `elasticitems`.
+project `elasticitems`.
 
 ### Add the project secrets
 
@@ -39,11 +35,20 @@ project `base-images` and `elasticitems`.
 
 ### Deploy MongoDB with a Deployment Configuration
 
+Deploy MongoDB from a built-in template:
+
     oc create -f templates/elasticitems-mongodb.yaml
     
 ### Create the Dataloader Container
 
+Deploy the build configuration:
+
     oc create -f templates/elasticitems-mongodb-loader.yaml
+
+and manually trigger the build:
+
+    oc start-build mongodb-loader -n elasticitems
+
 
 ### Build the App
 

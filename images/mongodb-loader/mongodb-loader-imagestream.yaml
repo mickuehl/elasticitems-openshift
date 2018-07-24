@@ -23,8 +23,6 @@ items:
       git:
         uri: 'https://github.com/mickuehl/elasticitems-openshift.git'
         ref: 'master'
-      sourceSecret:
-        name: "gitsecret"
       contextDir: 'images/mongodb-loader'
     
     strategy:

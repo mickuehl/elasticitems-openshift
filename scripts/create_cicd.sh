@@ -2,9 +2,10 @@
 
 CICD_PROJECT_NAME='cicd'
 CICD_DISPLAY_NAME='infrastructure'
-DOMAIN_NAME='svc.alpha.majordomus.io'
+DOMAIN_NAME='svc.beta.majordomus.io'
 
 # The CI/CD project
+#oc adm new-project $CICD_PROJECT_NAME --display-name="$CICD_DISPLAY_NAME" --description='Shared CI/CD Infrastructure' --node-selector='type=user-node,zone=utility'
 oc new-project $CICD_PROJECT_NAME --display-name="$CICD_DISPLAY_NAME" --description='Shared CI/CD Infrastructure'
 oc project $CICD_PROJECT_NAME
 
