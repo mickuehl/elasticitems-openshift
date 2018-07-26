@@ -63,12 +63,9 @@ items:
       script: ''
     
     triggers:
-      - type: ImageChange
-      - type: ConfigChange
-      - type: 'GitHub'
-        github:
-          secretReference:
-            name: 'elasticitems'
-
+      - github:
+          secret: secret101
+        type: GitHub
+        
 kind: List
 metadata: []
